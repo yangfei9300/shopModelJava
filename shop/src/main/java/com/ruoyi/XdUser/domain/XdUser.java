@@ -300,8 +300,6 @@ public class XdUser extends BaseEntity
                 .append("userId", getUserId())
                 .append("userId", getUserId())
                 .append("userId", getUserId())
-                .append("userId", getUserId())
-                .append("userId", getUserId())
             .toString();
     }
 }
