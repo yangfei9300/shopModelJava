@@ -61,7 +61,9 @@ public class XdUser extends BaseEntity
     /** 余额 */
     @Excel(name = "余额")
     private Long money;
-
+    /** 上级电话 */
+    @Excel(name = "上级电话")
+    private String superiorPhone;
     /** 默认地址ID */
     @Excel(name = "默认地址ID")
     private Long addressId;
@@ -155,7 +157,15 @@ public class XdUser extends BaseEntity
     {
         this.level = level;
     }
+    public void setSuperiorPhone(String superiorPhone)
+    {
+        this.superiorPhone = superiorPhone;
+    }
 
+    public String getSuperiorPhone()
+    {
+        return superiorPhone;
+    }
     public Long getLevel() 
     {
         return level;
@@ -280,6 +290,10 @@ public class XdUser extends BaseEntity
             .append("email", getEmail())
             .append("status", getStatus())
             .append("notes", getNotes())
+                .append("superiorPhone", getSuperiorPhone())
+                .append("superiorPhone", getSuperiorPhone())
+                .append("superiorPhone", getSuperiorPhone())
+                .append("superiorPhone", getSuperiorPhone())
             .append("createTime", getCreateTime())
             .append("updateTime", getUpdateTime())
             .append("deptId", getDeptId())

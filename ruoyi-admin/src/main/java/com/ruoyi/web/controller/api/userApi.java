@@ -159,7 +159,7 @@ public class userApi {
         map.put("code", 200);
         return map;
     }
-    //    获取收货地址
+    //    获取收货地址列表
     @PostMapping("/getCartList")
     public Map<String, Object> getCartList(@RequestBody XdAddress xdAddress) {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -217,11 +217,6 @@ public class userApi {
     @PostMapping("/addOrder")
     public Map<String, Object> addOrder(@RequestBody XdOrders xdOrders) {
         Map<String, Object> map = new HashMap<String, Object>();
-
-
-
-
-
 
         if(xdOrders.getuId()==null){
             map.put("msg", "用户信息为空");

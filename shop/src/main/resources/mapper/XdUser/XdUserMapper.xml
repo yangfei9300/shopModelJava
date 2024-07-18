@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="source"    column="source"    />
         <result property="integral"    column="integral"    />
         <result property="money"    column="money"    />
+        <result property="superiorPhone"    column="superior_phone"    />
         <result property="addressId"    column="address_id"    />
         <result property="isUse"    column="is_use"    />
         <result property="email"    column="email"    />
@@ -30,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="selectXdUserVo">
         select id, openid, name, nick_name, avatar, phone_number, password, level, use_type, source,
-               integral, money, address_id, is_use, email, status, notes, create_time,
+               integral, money, superior_phone,address_id, is_use, email, status, notes, create_time,
                update_time, dept_id, user_id from xd_user as xu
     </sql>
 
@@ -51,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="email != null  and email != ''"> and email like concat('%', #{email}, '%')</if>
             <if test="status != null "> and status = #{status}</if>
             <if test="notes != null  and notes != ''"> and notes like concat('%', #{notes}, '%')</if>
-
+            <if test="superiorPhone != null  and superiorPhone != ''"> and superior_phone = #{superiorPhone}</if>
             <if test="deptId != null "> and dept_id = #{deptId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
 
@@ -79,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="source != null">source,</if>
             <if test="integral != null">integral,</if>
             <if test="money != null">money,</if>
+            <if test="superiorPhone != null">superior_phone,</if>
             <if test="addressId != null">address_id,</if>
             <if test="isUse != null">is_use,</if>
             <if test="email != null">email,</if>
@@ -101,6 +103,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="source != null">#{source},</if>
             <if test="integral != null">#{integral},</if>
             <if test="money != null">#{money},</if>
+
+            <if test="superiorPhone != null">#{superiorPhone},</if>
             <if test="addressId != null">#{addressId},</if>
             <if test="isUse != null">#{isUse},</if>
             <if test="email != null">#{email},</if>
@@ -127,6 +131,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="source != null">source = #{source},</if>
             <if test="integral != null">integral = #{integral},</if>
             <if test="money != null">money = #{money},</if>
+            <if test="superiorPhone != null">superior_phone = #{superiorPhone},</if>
             <if test="addressId != null">address_id = #{addressId},</if>
             <if test="isUse != null">is_use = #{isUse},</if>
             <if test="email != null">email = #{email},</if>
