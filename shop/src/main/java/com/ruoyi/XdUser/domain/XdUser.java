@@ -297,6 +297,11 @@ public class XdUser extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("deptId", getDeptId())
             .append("userId", getUserId())
+                .append("userId", getUserId())
+                .append("userId", getUserId())
+                .append("userId", getUserId())
+                .append("userId", getUserId())
+                .append("userId", getUserId())
             .toString();
     }
 }
