@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdProductReviews.mapper.XdProductReviewsMapper">
+    
+    <resultMap type="XdProductReviews" id="XdProductReviewsResult">
+        <result property="id"    column="id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="specsId"    column="specs_id"    />
+        <result property="productName"    column="product_name"    />
+        <result property="specsName"    column="specs_name"    />
+        <result property="uId"    column="u_id"    />
+        <result property="rating"    column="rating"    />
+        <result property="reviewText"    column="review_text"    />
+        <result property="status"    column="status"    />
+        <result property="images"    column="images"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectXdProductReviewsVo">
+        select id, product_id, specs_id, product_name, specs_name, u_id,
+               rating, review_text, status, images,
+               create_time, update_time, dept_id, user_id from xd_product_reviews as xpr
+    </sql>
+
+    <select id="selectXdProductReviewsList" parameterType="XdProductReviews" resultMap="XdProductReviewsResult">
+        <include refid="selectXdProductReviewsVo"/>
+        <where>  
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="specsName != null  and specsName != ''"> and specs_name like concat('%', #{specsName}, '%')</if>
+            <if test="uId != null "> and u_id = #{uId}</if>
+            <if test="reviewText != null  and reviewText != ''"> and review_text = #{reviewText}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+
+            <if test="status != null "> and status = #{status}</if>
+            <if test="1==1 ">and 1=1</if>
+        </where>
+        ${params.dataScope}
+    </select>
+    
+    <select id="selectXdProductReviewsById" parameterType="Long" resultMap="XdProductReviewsResult">
+        <include refid="selectXdProductReviewsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdProductReviews" parameterType="XdProductReviews" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_product_reviews
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="productId != null">product_id,</if>
+            <if test="specsId != null">specs_id,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="specsName != null">specs_name,</if>
+            <if test="uId != null">u_id,</if>
+            <if test="rating != null">rating,</if>
+            <if test="reviewText != null">review_text,</if>
+            <if test="status != null">status,</if>
+            <if test="images != null">images,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="productId != null">#{productId},</if>
+            <if test="specsId != null">#{specsId},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="specsName != null">#{specsName},</if>
+            <if test="uId != null">#{uId},</if>
+            <if test="rating != null">#{rating},</if>
+            <if test="reviewText != null">#{reviewText},</if>
+            <if test="status != null">#{status},</if>
+            <if test="images != null">#{images},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdProductReviews" parameterType="XdProductReviews">
+        update xd_product_reviews
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="specsId != null">specs_id = #{specsId},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="specsName != null">specs_name = #{specsName},</if>
+            <if test="uId != null">u_id = #{uId},</if>
+            <if test="rating != null">rating = #{rating},</if>
+            <if test="reviewText != null">review_text = #{reviewText},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="images != null">images = #{images},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdProductReviewsById" parameterType="Long">
+        delete from xd_product_reviews where id = #{id}
+    </delete>
+
+    <delete id="deleteXdProductReviewsByIds" parameterType="String">
+        delete from xd_product_reviews where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdOrdersInfo.mapper.XdOrdersInfoMapper">
+    
+    <resultMap type="XdOrdersInfo" id="XdOrdersInfoResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="productId"    column="product_id"    />
+
+        <result property="spaceId"    column="space_id"    />
+        <result property="productImg"    column="product_img"    />
+        <result property="productName"    column="product_name"    />
+        <result property="specsImg"    column="specs_img"    />
+        <result property="specsName"    column="specs_name"    />
+        <result property="productPrice"    column="product_price"    />
+        <result property="specsPrice"    column="specs_price"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="subtotal"    column="subtotal"    />
+        <result property="couponId"    column="coupon_id"    />
+        <result property="discountAmount"    column="discount_amount"    />
+        <result property="finalPrice"    column="final_price"    />
+        <result property="note"    column="note"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectXdOrdersInfoVo">
+        select id, order_id, product_id,space_id, product_img, product_name, specs_img,
+        specs_name, product_price, specs_price, quantity, subtotal, coupon_id,
+        discount_amount, final_price, note, create_time, update_time,
+        dept_id, user_id from xd_orders_info
+    </sql>
+
+    <select id="selectXdOrdersInfoList" parameterType="XdOrdersInfo" resultMap="XdOrdersInfoResult">
+        <include refid="selectXdOrdersInfoVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="spaceId != null "> and space_id = #{spaceId}</if>
+            <if test="productImg != null  and productImg != ''"> and product_img = #{productImg}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="specsImg != null  and specsImg != ''"> and specs_img = #{specsImg}</if>
+            <if test="specsName != null  and specsName != ''"> and specs_name like concat('%', #{specsName}, '%')</if>
+            <if test="productPrice != null "> and product_price = #{productPrice}</if>
+            <if test="specsPrice != null "> and specs_price = #{specsPrice}</if>
+            <if test="quantity != null "> and quantity = #{quantity}</if>
+            <if test="subtotal != null "> and subtotal = #{subtotal}</if>
+            <if test="couponId != null "> and coupon_id = #{couponId}</if>
+            <if test="discountAmount != null "> and discount_amount = #{discountAmount}</if>
+            <if test="finalPrice != null "> and final_price = #{finalPrice}</if>
+
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+
+            <if test="note != null  and note != ''"> and note = #{note}</if>
+        </where>
+    </select>
+    
+    <select id="selectXdOrdersInfoById" parameterType="Long" resultMap="XdOrdersInfoResult">
+        <include refid="selectXdOrdersInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdOrdersInfo" parameterType="XdOrdersInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_orders_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="spaceId != null">space_id,</if>
+            <if test="productImg != null">product_img,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="specsImg != null">specs_img,</if>
+            <if test="specsName != null">specs_name,</if>
+            <if test="productPrice != null">product_price,</if>
+            <if test="specsPrice != null">specs_price,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="subtotal != null">subtotal,</if>
+            <if test="couponId != null">coupon_id,</if>
+            <if test="discountAmount != null">discount_amount,</if>
+            <if test="finalPrice != null">final_price,</if>
+            <if test="note != null">note,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="spaceId != null">#{spaceId},</if>
+            <if test="productImg != null">#{productImg},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="specsImg != null">#{specsImg},</if>
+            <if test="specsName != null">#{specsName},</if>
+            <if test="productPrice != null">#{productPrice},</if>
+            <if test="specsPrice != null">#{specsPrice},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="subtotal != null">#{subtotal},</if>
+            <if test="couponId != null">#{couponId},</if>
+            <if test="discountAmount != null">#{discountAmount},</if>
+            <if test="finalPrice != null">#{finalPrice},</if>
+            <if test="note != null">#{note},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdOrdersInfo" parameterType="XdOrdersInfo">
+        update xd_orders_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+
+            <if test="spaceId != null">space_id = #{spaceId},</if>
+
+            <if test="productImg != null">product_img = #{productImg},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="specsImg != null">specs_img = #{specsImg},</if>
+            <if test="specsName != null">specs_name = #{specsName},</if>
+            <if test="productPrice != null">product_price = #{productPrice},</if>
+            <if test="specsPrice != null">specs_price = #{specsPrice},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="subtotal != null">subtotal = #{subtotal},</if>
+            <if test="couponId != null">coupon_id = #{couponId},</if>
+            <if test="discountAmount != null">discount_amount = #{discountAmount},</if>
+            <if test="finalPrice != null">final_price = #{finalPrice},</if>
+            <if test="note != null">note = #{note},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdOrdersInfoById" parameterType="Long">
+        delete from xd_orders_info where id = #{id}
+    </delete>
+
+    <delete id="deleteXdOrdersInfoByIds" parameterType="String">
+        delete from xd_orders_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdCoupons.mapper.XdCouponsMapper">
+    
+    <resultMap type="XdCoupons" id="XdCouponsResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="code"    column="code"    />
+        <result property="type"    column="type"    />
+        <result property="money"    column="money"    />
+        <result property="discount"    column="discount"    />
+        <result property="minimumAmount"    column="minimum_amount"    />
+        <result property="startDate"    column="start_date"    />
+        <result property="endDate"    column="end_date"    />
+        <result property="usageLimit"    column="usage_limit"    />
+        <result property="usedCount"    column="used_count"    />
+        <result property="productId"    column="product_id"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="status"    column="status"    />
+        <result property="notes"    column="notes"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectXdCouponsVo">
+        select id, name, code, type, money, discount, minimum_amount, start_date, end_date, usage_limit,
+               used_count, product_id, category_id, status, notes, create_time,
+               update_time, dept_id, user_id from xd_coupons as xc
+    </sql>
+
+    <select id="selectXdCouponsList" parameterType="XdCoupons" resultMap="XdCouponsResult">
+        <include refid="selectXdCouponsVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="discount != null "> and discount = #{discount}</if>
+            <if test="minimumAmount != null "> and minimum_amount = #{minimumAmount}</if>
+            <if test="startDate != null "> and start_date = #{startDate}</if>
+            <if test="endDate != null "> and end_date = #{endDate}</if>
+            <if test="usageLimit != null "> and usage_limit = #{usageLimit}</if>
+            <if test="usedCount != null "> and used_count = #{usedCount}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
+
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+
+            <if test="1==1 ">and 1=1</if>
+        </where>
+        ${params.dataScope}
+    </select>
+    
+    <select id="selectXdCouponsById" parameterType="Long" resultMap="XdCouponsResult">
+        <include refid="selectXdCouponsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdCoupons" parameterType="XdCoupons" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_coupons
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="code != null">code,</if>
+            <if test="type != null">type,</if>
+            <if test="money != null">money,</if>
+            <if test="discount != null">discount,</if>
+            <if test="minimumAmount != null">minimum_amount,</if>
+            <if test="startDate != null">start_date,</if>
+            <if test="endDate != null">end_date,</if>
+            <if test="usageLimit != null">usage_limit,</if>
+            <if test="usedCount != null">used_count,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="status != null">status,</if>
+            <if test="notes != null">notes,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="code != null">#{code},</if>
+            <if test="type != null">#{type},</if>
+            <if test="money != null">#{money},</if>
+            <if test="discount != null">#{discount},</if>
+            <if test="minimumAmount != null">#{minimumAmount},</if>
+            <if test="startDate != null">#{startDate},</if>
+            <if test="endDate != null">#{endDate},</if>
+            <if test="usageLimit != null">#{usageLimit},</if>
+            <if test="usedCount != null">#{usedCount},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdCoupons" parameterType="XdCoupons">
+        update xd_coupons
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="discount != null">discount = #{discount},</if>
+            <if test="minimumAmount != null">minimum_amount = #{minimumAmount},</if>
+            <if test="startDate != null">start_date = #{startDate},</if>
+            <if test="endDate != null">end_date = #{endDate},</if>
+            <if test="usageLimit != null">usage_limit = #{usageLimit},</if>
+            <if test="usedCount != null">used_count = #{usedCount},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdCouponsById" parameterType="Long">
+        delete from xd_coupons where id = #{id}
+    </delete>
+
+    <delete id="deleteXdCouponsByIds" parameterType="String">
+        delete from xd_coupons where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

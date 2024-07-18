@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdProducts.mapper.XdProductsMapper">
+    
+    <resultMap type="XdProducts" id="XdProductsResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="img"    column="img"    />
+        <result property="banners"    column="banners"    />
+        <result property="description"    column="description"    />
+        <result property="descriptionHtml"    column="description_html"    />
+        <result property="categoryId"    column="category_id"    />
+        <result property="price"    column="price"    />
+        <result property="preferentialPrice"    column="preferential_price"    />
+        <result property="inventory"    column="inventory"    />
+        <result property="sort"    column="sort"    />
+        <result property="tag"    column="tag"    />
+        <result property="notes"    column="notes"    />
+        <result property="status"    column="status"    />
+        <result property="isCoupon"    column="is_coupon"    />
+        <result property="isNew"    column="is_new"    />
+        <result property="isRecommend"    column="is_recommend"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectXdProductsVo">
+        select id, name, img, banners, description, description_html, category_id, price, preferential_price, inventory, sort, tag, notes, status, is_coupon, is_new, is_recommend, create_time, update_time, dept_id, user_id
+        from xd_products xp
+    </sql>
+
+    <select id="selectXdProductsList" parameterType="XdProducts" resultMap="XdProductsResult">
+        <include refid="selectXdProductsVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="categoryId != null "> and category_id = #{categoryId}</if>
+            <if test="inventory != null "> and inventory = #{inventory}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
+            <if test="tag != null  and tag != ''"> and tag like concat('%', #{tag}, '%')</if>
+            <if test="notes != null  and notes != ''"> and notes like concat('%', #{notes}, '%')</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="isCoupon != null "> and is_coupon = #{isCoupon}</if>
+            <if test="isNew != null "> and is_new = #{isNew}</if>
+            <if test="isRecommend != null  and isRecommend != ''"> and is_recommend = #{isRecommend}</if>
+
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+
+            <if test="1==1 ">and 1=1</if>
+        </where>
+        ${params.dataScope}
+    </select>
+    
+    <select id="selectXdProductsById" parameterType="Long" resultMap="XdProductsResult">
+        <include refid="selectXdProductsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdProducts" parameterType="XdProducts" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_products
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="img != null">img,</if>
+            <if test="banners != null">banners,</if>
+            <if test="description != null">description,</if>
+            <if test="descriptionHtml != null">description_html,</if>
+            <if test="categoryId != null">category_id,</if>
+            <if test="price != null">price,</if>
+            <if test="preferentialPrice != null">preferential_price,</if>
+            <if test="inventory != null">inventory,</if>
+            <if test="sort != null">sort,</if>
+            <if test="tag != null">tag,</if>
+            <if test="notes != null">notes,</if>
+            <if test="status != null">status,</if>
+            <if test="isCoupon != null">is_coupon,</if>
+            <if test="isNew != null">is_new,</if>
+            <if test="isRecommend != null">is_recommend,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="img != null">#{img},</if>
+            <if test="banners != null">#{banners},</if>
+            <if test="description != null">#{description},</if>
+            <if test="descriptionHtml != null">#{descriptionHtml},</if>
+            <if test="categoryId != null">#{categoryId},</if>
+            <if test="price != null">#{price},</if>
+            <if test="preferentialPrice != null">#{preferentialPrice},</if>
+            <if test="inventory != null">#{inventory},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="tag != null">#{tag},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="status != null">#{status},</if>
+            <if test="isCoupon != null">#{isCoupon},</if>
+            <if test="isNew != null">#{isNew},</if>
+            <if test="isRecommend != null">#{isRecommend},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdProducts" parameterType="XdProducts">
+        update xd_products
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="img != null">img = #{img},</if>
+            <if test="banners != null">banners = #{banners},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="descriptionHtml != null">description_html = #{descriptionHtml},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="preferentialPrice != null">preferential_price = #{preferentialPrice},</if>
+            <if test="inventory != null">inventory = #{inventory},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="tag != null">tag = #{tag},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="isCoupon != null">is_coupon = #{isCoupon},</if>
+            <if test="isNew != null">is_new = #{isNew},</if>
+            <if test="isRecommend != null">is_recommend = #{isRecommend},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdProductsById" parameterType="Long">
+        delete from xd_products where id = #{id}
+    </delete>
+
+    <delete id="deleteXdProductsByIds" parameterType="String">
+        delete from xd_products where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdIntegralRecord.mapper.XdIntegralRecordMapper">
+    
+    <resultMap type="XdIntegralRecord" id="XdIntegralRecordResult">
+        <result property="id"    column="id"    />
+        <result property="uId"    column="u_id"    />
+        <result property="num"    column="num"    />
+        <result property="updateType"    column="update_type"    />
+        <result property="consumptionType"    column="consumption_type"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="notes"    column="notes"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectXdIntegralRecordVo">
+        select id, u_id, num, update_type, consumption_type, order_id, notes, create_time, dept_id, user_id
+        from xd_Integral_record as xi
+    </sql>
+
+    <select id="selectXdIntegralRecordList" parameterType="XdIntegralRecord" resultMap="XdIntegralRecordResult">
+        <include refid="selectXdIntegralRecordVo"/>
+        <where>  
+            <if test="uId != null "> and u_id = #{uId}</if>
+            <if test="updateType != null "> and update_type = #{updateType}</if>
+            <if test="consumptionType != null "> and consumption_type = #{consumptionType}</if>
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="notes != null  and notes != ''"> and notes = #{notes}</if>
+
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+
+            <if test="1==1 ">and 1=1</if>
+        </where>
+        ${params.dataScope}
+    </select>
+    
+    <select id="selectXdIntegralRecordById" parameterType="Long" resultMap="XdIntegralRecordResult">
+        <include refid="selectXdIntegralRecordVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdIntegralRecord" parameterType="XdIntegralRecord">
+        insert into xd_Integral_record
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="uId != null">u_id,</if>
+            <if test="num != null">num,</if>
+            <if test="updateType != null">update_type,</if>
+            <if test="consumptionType != null">consumption_type,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="notes != null">notes,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="uId != null">#{uId},</if>
+            <if test="num != null">#{num},</if>
+            <if test="updateType != null">#{updateType},</if>
+            <if test="consumptionType != null">#{consumptionType},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdIntegralRecord" parameterType="XdIntegralRecord">
+        update xd_Integral_record
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uId != null">u_id = #{uId},</if>
+            <if test="num != null">num = #{num},</if>
+            <if test="updateType != null">update_type = #{updateType},</if>
+            <if test="consumptionType != null">consumption_type = #{consumptionType},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdIntegralRecordById" parameterType="Long">
+        delete from xd_Integral_record where id = #{id}
+    </delete>
+
+    <delete id="deleteXdIntegralRecordByIds" parameterType="String">
+        delete from xd_Integral_record where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

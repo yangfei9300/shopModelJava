@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdCarts.mapper.XdCartsMapper">
+    
+    <resultMap type="XdCarts" id="XdCartsResult">
+        <result property="id"    column="id"    />
+        <result property="uId"    column="u_id"    />
+        <result property="productId"    column="product_id"    />
+        <result property="specsId"    column="specs_id"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="price"    column="price"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="params.spaceImg"    column="space_img"    />
+    </resultMap>
+
+    <sql id="selectXdCartsVo">
+        select id, u_id, product_id, specs_id, quantity, price, create_time, update_time, dept_id,
+               user_id from xd_carts as xc
+    </sql>
+
+    <select id="selectXdCartsList" parameterType="XdCarts" resultMap="XdCartsResult">
+        <include refid="selectXdCartsVo"/>
+        <where>  
+            <if test="uId != null "> and u_id = #{uId}</if>
+            <if test="productId != null "> and product_id = #{productId}</if>
+            <if test="specsId != null "> and specs_id = #{specsId}</if>
+            <if test="quantity != null "> and quantity = #{quantity}</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="1==1 ">and 1=1</if>
+        </where>
+        ${params.dataScope}
+    </select>
+
+
+    <select id="getUserCarts" parameterType="XdCarts" resultMap="XdCartsResult">
+        SELECT
+            xc.id,xc.product_id,xc.specs_id,xc.quantity,xgs.space_price as price,xgs.space_img,xgs.space_img,xgs.status
+        FROM xd_carts xc
+                 JOIN xd_good_specs xgs ON xgs.id = xc.specs_id
+        where xc.dept_id=#{deptId} AND xc.u_id=#{uId}
+    </select>
+
+    
+    <select id="selectXdCartsById" parameterType="Long" resultMap="XdCartsResult">
+        <include refid="selectXdCartsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdCarts" parameterType="XdCarts" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_carts
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uId != null">u_id,</if>
+            <if test="productId != null">product_id,</if>
+            <if test="specsId != null">specs_id,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="price != null">price,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uId != null">#{uId},</if>
+            <if test="productId != null">#{productId},</if>
+            <if test="specsId != null">#{specsId},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="price != null">#{price},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdCarts" parameterType="XdCarts">
+        update xd_carts
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uId != null">u_id = #{uId},</if>
+            <if test="productId != null">product_id = #{productId},</if>
+            <if test="specsId != null">specs_id = #{specsId},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdCartsById" parameterType="Long">
+        delete from xd_carts where id = #{id}
+    </delete>
+
+    <delete id="deleteXdCartsByIds" parameterType="String">
+        delete from xd_carts where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

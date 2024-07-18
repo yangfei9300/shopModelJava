@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdUser.mapper.XdUserMapper">
+    
+    <resultMap type="XdUser" id="XdUserResult">
+        <result property="id"    column="id"    />
+        <result property="openid"    column="openid"    />
+        <result property="name"    column="name"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="phoneNumber"    column="phone_number"    />
+        <result property="password"    column="password"    />
+        <result property="level"    column="level"    />
+        <result property="useType"    column="use_type"    />
+        <result property="source"    column="source"    />
+        <result property="integral"    column="integral"    />
+        <result property="money"    column="money"    />
+        <result property="addressId"    column="address_id"    />
+        <result property="isUse"    column="is_use"    />
+        <result property="email"    column="email"    />
+        <result property="status"    column="status"    />
+        <result property="notes"    column="notes"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectXdUserVo">
+        select id, openid, name, nick_name, avatar, phone_number, password, level, use_type, source,
+               integral, money, address_id, is_use, email, status, notes, create_time,
+               update_time, dept_id, user_id from xd_user as xu
+    </sql>
+
+    <select id="selectXdUserList" parameterType="XdUser" resultMap="XdUserResult">
+        <include refid="selectXdUserVo"/>
+        <where>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="nickName != null  and nickName != ''"> and nick_name like concat('%', #{nickName}, '%')</if>
+
+            <if test="phoneNumber != null  and phoneNumber != ''"> and phone_number = #{phoneNumber} </if>
+            <if test="password != null  and password != ''"> and password = #{password} </if>
+            <if test="openid != null  and openid != ''"> and openid = #{openid} </if>
+
+            <if test="level != null "> and level = #{level}</if>
+            <if test="useType != null "> and use_type = #{useType}</if>
+            <if test="source != null  and source != ''"> and source = #{source}</if>
+            <if test="isUse != null "> and is_use = #{isUse}</if>
+            <if test="email != null  and email != ''"> and email like concat('%', #{email}, '%')</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="notes != null  and notes != ''"> and notes like concat('%', #{notes}, '%')</if>
+
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+
+            <if test="1==1 ">and 1=1</if>
+        </where>
+        ${params.dataScope}
+    </select>
+    
+    <select id="selectXdUserById" parameterType="Long" resultMap="XdUserResult">
+        <include refid="selectXdUserVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdUser" parameterType="XdUser" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="openid != null">openid,</if>
+            <if test="name != null">name,</if>
+            <if test="nickName != null">nick_name,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="phoneNumber != null">phone_number,</if>
+            <if test="password != null">password,</if>
+            <if test="level != null">level,</if>
+            <if test="useType != null">use_type,</if>
+            <if test="source != null">source,</if>
+            <if test="integral != null">integral,</if>
+            <if test="money != null">money,</if>
+            <if test="addressId != null">address_id,</if>
+            <if test="isUse != null">is_use,</if>
+            <if test="email != null">email,</if>
+            <if test="status != null">status,</if>
+            <if test="notes != null">notes,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="openid != null">#{openid},</if>
+            <if test="name != null">#{name},</if>
+            <if test="nickName != null">#{nickName},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="phoneNumber != null">#{phoneNumber},</if>
+            <if test="password != null">#{password},</if>
+            <if test="level != null">#{level},</if>
+            <if test="useType != null">#{useType},</if>
+            <if test="source != null">#{source},</if>
+            <if test="integral != null">#{integral},</if>
+            <if test="money != null">#{money},</if>
+            <if test="addressId != null">#{addressId},</if>
+            <if test="isUse != null">#{isUse},</if>
+            <if test="email != null">#{email},</if>
+            <if test="status != null">#{status},</if>
+            <if test="notes != null">#{notes},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdUser" parameterType="XdUser">
+        update xd_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="openid != null">openid = #{openid},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="nickName != null">nick_name = #{nickName},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="phoneNumber != null">phone_number = #{phoneNumber},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="level != null">level = #{level},</if>
+            <if test="useType != null">use_type = #{useType},</if>
+            <if test="source != null">source = #{source},</if>
+            <if test="integral != null">integral = #{integral},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="addressId != null">address_id = #{addressId},</if>
+            <if test="isUse != null">is_use = #{isUse},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="notes != null">notes = #{notes},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdUserById" parameterType="Long">
+        delete from xd_user where id = #{id}
+    </delete>
+
+    <delete id="deleteXdUserByIds" parameterType="String">
+        delete from xd_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <update id="updateIntegral" parameterType="XdUser">
+        UPDATE xd_user
+        SET integral = integral + #{integral}
+        WHERE id = #{id};
+    </update>
+    <update id="updateIntegraljian" parameterType="XdUser">
+        UPDATE xd_user
+        SET integral = integral - #{integral}
+        WHERE id = #{id};
+    </update>
+
+
+
+</mapper>

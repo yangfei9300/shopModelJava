@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdGoodSpecs.mapper.XdGoodSpecsMapper">
+    
+    <resultMap type="XdGoodSpecs" id="XdGoodSpecsResult">
+        <result property="id"    column="id"    />
+        <result property="goodId"    column="good_id"    />
+        <result property="count"    column="count"    />
+        <result property="specsName"    column="specs_name"    />
+        <result property="spaceImg"    column="space_img"    />
+        <result property="spacePrice"    column="space_price"    />
+        <result property="spaceOriginalPrice"    column="space_original_price"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="userId"    column="user_id"    />
+    </resultMap>
+
+    <sql id="selectXdGoodSpecsVo">
+        select id, good_id,count, specs_name, space_img, space_price, space_original_price, status, create_time, update_time, dept_id, user_id from xd_good_specs
+    </sql>
+
+    <select id="selectXdGoodSpecsList" parameterType="XdGoodSpecs" resultMap="XdGoodSpecsResult">
+        <include refid="selectXdGoodSpecsVo"/>
+        <where>  
+            <if test="goodId != null "> and good_id = #{goodId}</if>
+            <if test="specsName != null  and specsName != ''"> and specs_name like concat('%', #{specsName}, '%')</if>
+            <if test="spaceImg != null  and spaceImg != ''"> and space_img = #{spaceImg}</if>
+            <if test="spacePrice != null "> and space_price = #{spacePrice}</if>
+            <if test="spaceOriginalPrice != null "> and space_original_price = #{spaceOriginalPrice}</if>
+
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+    
+    <select id="selectXdGoodSpecsById" parameterType="Long" resultMap="XdGoodSpecsResult">
+        <include refid="selectXdGoodSpecsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdGoodSpecs" parameterType="XdGoodSpecs" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_good_specs
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="goodId != null">good_id,</if>
+            <if test="count != null">count,</if>
+            <if test="specsName != null">specs_name,</if>
+            <if test="spaceImg != null">space_img,</if>
+            <if test="spacePrice != null">space_price,</if>
+            <if test="spaceOriginalPrice != null">space_original_price,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="userId != null">user_id,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="goodId != null">#{goodId},</if>
+            <if test="count != null">#{count},</if>
+            <if test="specsName != null">#{specsName},</if>
+            <if test="spaceImg != null">#{spaceImg},</if>
+            <if test="spacePrice != null">#{spacePrice},</if>
+            <if test="spaceOriginalPrice != null">#{spaceOriginalPrice},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="userId != null">#{userId},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdGoodSpecs" parameterType="XdGoodSpecs">
+        update xd_good_specs
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodId != null">good_id = #{goodId},</if>
+            <if test="count != null">count = #{count},</if>
+            <if test="specsName != null">specs_name = #{specsName},</if>
+            <if test="spaceImg != null">space_img = #{spaceImg},</if>
+            <if test="spacePrice != null">space_price = #{spacePrice},</if>
+            <if test="spaceOriginalPrice != null">space_original_price = #{spaceOriginalPrice},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdGoodSpecsById" parameterType="Long">
+        delete from xd_good_specs where id = #{id}
+    </delete>
+
+    <delete id="deleteXdGoodSpecsByIds" parameterType="String">
+        delete from xd_good_specs where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+    <update id="updateGoodCount" parameterType="XdGoodSpecs">
+        UPDATE xd_good_specs
+        SET count = count + #{count}
+        WHERE id = #{id};
+    </update>
+
+</mapper>
