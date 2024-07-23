@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdCommissionHistory.mapper.XdCommissionHistoryMapper">
+    
+    <resultMap type="XdCommissionHistory" id="XdCommissionHistoryResult">
+        <result property="id"    column="id"    />
+        <result property="uId"    column="u_id"    />
+        <result property="belowId"    column="below_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="money"    column="money"    />
+        <result property="remark"    column="remark"    />
+        <result property="status"    column="status"    />
+
+        <result property="goodCount"    column="good_count"    />
+        <result property="type"    column="type"    />
+        <result property="userId"    column="user_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="params.count"    column="count"    />
+        <result property="params.money"    column="money"    />
+        <result property="params.name"    column="name"    />
+        <result property="params.avatar"    column="avatar"    />
+        <result property="params.totalMmoney"    column="totalMmoney"    />
+
+    </resultMap>
+
+    <sql id="selectXdCommissionHistoryVo">
+        select id, u_id, below_id, order_id, money, remark,status,good_count, user_id, dept_id,create_time from xd_commission_history
+    </sql>
+
+    <select id="selectXdCommissionHistoryList" parameterType="XdCommissionHistory" resultMap="XdCommissionHistoryResult">
+        <include refid="selectXdCommissionHistoryVo"/>
+        <where>  
+            <if test="uId != null "> and u_id = #{uId}</if>
+            <if test="belowId != null "> and below_id = #{belowId}</if><if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="type != null "> and type = #{type}</if>
+            <if test="goodCount != null "> and good_count = #{goodCount}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <select id="selectXdCommissionHistoryById" parameterType="Long" resultMap="XdCommissionHistoryResult">
+        <include refid="selectXdCommissionHistoryVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="getKickbacks" parameterType="Long" resultMap="XdCommissionHistoryResult">
+            SELECT
+                xch.u_id,
+                xch.below_id,
+                xch.STATUS,
+                xch.create_time,
+                xch.remark,
+                SUM( xch.good_count ) good_count,
+                SUM( xch.money ) AS money,
+                SUM( xo.end_money ) AS totalMmoney,
+                xu.NAME,
+                xu.avatar
+            FROM
+                xd_commission_history xch
+                    LEFT JOIN xd_user xu ON xch.below_id = xu.id
+                    LEFT JOIN xd_orders xo ON xch.order_id = xo.id
+
+            WHERE
+                xch.u_id = #{uId}
+            GROUP BY
+                below_id;
+    </select>
+
+
+
+    <insert id="insertXdCommissionHistory" parameterType="XdCommissionHistory">
+        insert into xd_commission_history
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="uId != null">u_id,</if>
+            <if test="belowId != null">below_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="money != null">money,</if>
+            <if test="remark != null">remark,</if>
+            <if test="type != null">type,</if><if test="goodCount != null">good_count,</if>
+            <if test="status != null">status,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="createTime != null">create_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="uId != null">#{uId},</if>
+            <if test="belowId != null">#{belowId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="money != null">#{money},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="type != null">#{type},</if>
+            <if test="goodCount != null">#{goodCount},</if>
+            <if test="status != null">#{status},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="createTime != null">#{createTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdCommissionHistory" parameterType="XdCommissionHistory">
+        update xd_commission_history
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uId != null">u_id = #{uId},</if>
+            <if test="belowId != null">below_id = #{belowId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="status != null">type = #{status},</if>
+            <if test="goodCount != null">good_count = #{goodCount},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdCommissionHistoryById" parameterType="Long">
+        delete from xd_commission_history where id = #{id}
+    </delete>
+
+    <delete id="deleteXdCommissionHistoryByIds" parameterType="String">
+        delete from xd_commission_history where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

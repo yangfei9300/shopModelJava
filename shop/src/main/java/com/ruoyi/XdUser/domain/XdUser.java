@@ -5,6 +5,8 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.math.BigDecimal;
+
 /**
  * 微信用户对象 xd_user
  * 
@@ -60,10 +62,10 @@ public class XdUser extends BaseEntity
 
     /** 余额 */
     @Excel(name = "余额")
-    private Long money;
+    private BigDecimal money;
     /** 上级电话 */
     @Excel(name = "上级电话")
-    private String superiorPhone;
+    private Long superiorPhone;
     /** 默认地址ID */
     @Excel(name = "默认地址ID")
     private Long addressId;
@@ -157,12 +159,12 @@ public class XdUser extends BaseEntity
     {
         this.level = level;
     }
-    public void setSuperiorPhone(String superiorPhone)
+    public void setSuperiorPhone(Long superiorPhone)
     {
         this.superiorPhone = superiorPhone;
     }
 
-    public String getSuperiorPhone()
+    public Long getSuperiorPhone()
     {
         return superiorPhone;
     }
@@ -197,12 +199,12 @@ public class XdUser extends BaseEntity
     {
         return integral;
     }
-    public void setMoney(Long money) 
+    public void setMoney(BigDecimal money)
     {
         this.money = money;
     }
 
-    public Long getMoney() 
+    public BigDecimal getMoney()
     {
         return money;
     }

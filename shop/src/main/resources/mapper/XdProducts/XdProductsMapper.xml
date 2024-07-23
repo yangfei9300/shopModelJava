@@ -53,6 +53,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="1==1 ">and 1=1</if>
         </where>
         ${params.dataScope}
+        <if test="params.sel==1 ">
+            ORDER BY    id DESC
+        </if>
+
+        <if test="params.sel==2 ">
+            ORDER BY create_time DESC
+        </if>
+        <if test="params.sel==3 ">
+            ORDER BY preferential_price ASC
+        </if>
+        <if test="params.sel==4 ">
+            ORDER BY preferential_price  DESC
+        </if>
     </select>
     
     <select id="selectXdProductsById" parameterType="Long" resultMap="XdProductsResult">

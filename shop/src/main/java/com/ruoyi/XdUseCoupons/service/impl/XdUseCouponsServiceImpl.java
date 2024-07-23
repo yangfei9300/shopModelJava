@@ -44,6 +44,11 @@ public class XdUseCouponsServiceImpl implements IXdUseCouponsService
         return xdUseCouponsMapper.selectXdUseCouponsList(xdUseCoupons);
     }
 
+    @Override
+    public List<XdUseCoupons> getCouponByUid(XdUseCoupons xdUseCoupons) {
+        return xdUseCouponsMapper.getCouponByUid(xdUseCoupons);
+    }
+
     /**
      * 新增优惠券领取使用记录
      * 

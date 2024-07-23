@@ -29,6 +29,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="couponMoney"    column="coupon_money"    />
         <result property="endMoney"    column="end_money"    />
         <result property="couponId"    column="coupon_id"    />
+
+        <result property="superiorId"    column="superior_id"    />
         <result property="notes"    column="notes"    />
         <result property="updateTime"    column="update_time"    />
         <result property="createTime"    column="create_time"    />
@@ -38,7 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <sql id="selectXdOrdersVo">
         select id, u_id, order_number, order_date, pay_time, send_time, put_time, comm_time, status, address_id,
-               address,address_name,  address_phone,address_info, shipping_method,
+               address,address_name,  address_phone,address_info,superior_id, shipping_method,
                logistics_name, logistics_code,
                payment_method,
                total_amount,total_integer, coupon_money, end_money, coupon_id,
@@ -66,6 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="logisticsName != null  and logisticsName != ''"> and logistics_name like concat('%', #{logisticsName}, '%')</if>
             <if test="logisticsCode != null  and logisticsCode != ''"> and logistics_code like concat('%', #{logisticsCode}, '%')</if>
             <if test="paymentMethod != null "> and payment_method = #{paymentMethod}</if>
+            <if test="superiorId != null "> and superior_id = #{superiorId}</if>
             <if test="totalAmount != null "> and total_amount = #{totalAmount}</if>
             <if test="totalInteger != null "> and total_integer = #{totalInteger}</if>
             <if test="couponMoney != null "> and coupon_money = #{couponMoney}</if>
@@ -77,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
             <if test="deptId != null "> and dept_id = #{deptId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="id != null "> and id = #{id}</if>
 
             <if test="1==1 ">and 1=1</if>
         </where>
@@ -115,6 +119,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="couponMoney != null">coupon_money,</if>
             <if test="endMoney != null">end_money,</if>
             <if test="couponId != null">coupon_id,</if>
+
+            <if test="superiorId != null">superior_id,</if>
             <if test="notes != null">notes,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="createTime != null">create_time,</if>
@@ -148,6 +154,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="couponMoney != null">#{couponMoney},</if>
             <if test="endMoney != null">#{endMoney},</if>
             <if test="couponId != null">#{couponId},</if>
+
+            <if test="superiorId != null">#{superiorId},</if>
             <if test="notes != null">#{notes},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="createTime != null">#{createTime},</if>
@@ -184,6 +192,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="couponMoney != null">coupon_money = #{couponMoney},</if>
             <if test="endMoney != null">end_money = #{endMoney},</if>
             <if test="couponId != null">coupon_id = #{couponId},</if>
+
+            <if test="superiorId != null">superior_id = #{superiorId},</if>
             <if test="notes != null">notes = #{notes},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
@@ -277,13 +287,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <result property="orderNumber"    column="order_number"    />
     <result property="endMoney"    column="end_money"    />
     <collection property="orderItems" ofType="XdOrdersInfo">
-        <id property="id" column="id" jdbcType="VARCHAR"></id>
+        <id property="id" column="id_info" jdbcType="VARCHAR"></id>
 
         <result property="spaceId" column="space_id" ></result>
         <result property="productImg" column="product_img" ></result>
         <result property="specsImg" column="specs_img" ></result>
         <result property="finalPrice" column="final_price" ></result>
         <result property="quantity" column="quantity" ></result>
+
+        <result property="productName" column="product_name" ></result>
+        <result property="specsName" column="specs_name" ></result>
+        <result property="specsPrice" column="specs_price" ></result>
+
+
     </collection>
 </resultMap>
 
@@ -292,20 +308,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	o.id,
 	o.u_id,
 	o.user_id,
-    o.status,
+    o.status as   `status`,
     o.total_integer,
-
 	o.order_date,
 	o.order_number,
+	i.id id_info,
 	i.product_img,
 	i.specs_img,
 	i.final_price,
+    i.specs_price,
     i.space_id,
 	i.quantity,
+    i.product_name,
+    i.specs_name,
 	o.end_money
 FROM
 	xd_orders o
 	JOIN xd_orders_info i ON o.id = i.order_id
+
+    <where>
+        <if test="uId != null "> and o.u_id = #{uId}</if>
+        <if test="id != null "> and o.id = #{id}</if>
+        <if test="status != null "> and o.status = #{status}</if>
+    </where>
+    ORDER BY o.create_time DESC
 </select>
 
 

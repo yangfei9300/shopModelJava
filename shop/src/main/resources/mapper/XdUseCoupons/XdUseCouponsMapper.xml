@@ -17,6 +17,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="deptId"    column="dept_id"    />
         <result property="userId"    column="user_id"    />
+
+
+        <result property="params.NAME"    column="NAME"    />
+        <result property="params.type"    column="type"    />
+        <result property="params.money"    column="money"    />
+        <result property="params.discount"    column="discount"    />
+        <result property="params.minimum_amount"    column="minimum_amount"    />
+        <result property="params.start_date"    column="start_date"    />
+        <result property="params.end_date"    column="end_date"    />
+        <result property="params.notes"    column="notes"    />
+
     </resultMap>
 
     <sql id="selectXdUseCouponsVo">
@@ -103,4 +114,84 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+
+    <select id="getCouponByUid" parameterType="XdUseCoupons" resultMap="XdUseCouponsResult" >
+
+        <if test="id==1">
+
+            SELECT
+            xuc.id,
+            xuc.c_id,
+            xuc.u_id,
+            xuc.STATUS,
+            xc.NAME,
+            xc.type,
+            xc.money,
+            xc.discount,
+            xc.minimum_amount,
+            xc.start_date,
+            xc.end_date,
+            xc.notes,
+            xc.create_time
+            FROM
+            xd_use_coupons xuc
+            LEFT JOIN xd_coupons xc ON xuc.c_id = xc.id
+            WHERE
+            xuc.c_id = xc.id
+            AND    NOW() BETWEEN xc.start_date AND xc.end_date
+            AND xuc.u_id =#{uId} AND xuc.`status`=1 and xuc.dept_id=#{deptId}
+
+
+        </if>
+        <if test="id==2">
+            SELECT
+            xuc.id,
+            xuc.c_id,
+            xuc.u_id,
+            xuc.STATUS,
+            xc.NAME,
+            xc.type,
+            xc.money,
+            xc.discount,
+            xc.minimum_amount,
+            xc.start_date,
+            xc.end_date,
+            xc.notes,
+            xc.create_time
+            FROM
+            xd_use_coupons xuc
+            LEFT JOIN xd_coupons xc ON xuc.c_id = xc.id
+            WHERE
+            xuc.c_id = xc.id
+
+            AND xuc.u_id =#{uId} AND xuc.`status`=2 AND xuc.dept_id=#{deptId}
+        </if>
+        <if test="id==3">
+            SELECT
+            xuc.id,
+            xuc.c_id,
+            xuc.u_id,
+            xuc.STATUS,
+            xc.NAME,
+            xc.type,
+            xc.money,
+            xc.discount,
+            xc.minimum_amount,
+            xc.start_date,
+            xc.end_date,
+            xc.notes,
+            xc.create_time
+            FROM
+            xd_use_coupons xuc
+            LEFT JOIN xd_coupons xc ON xuc.c_id = xc.id
+            WHERE
+            xuc.c_id = xc.id
+            AND    NOW() >  xc.end_date
+            AND xuc.u_id =#{uId} AND xuc.`status`=1 AND xuc.dept_id=#{deptId}
+        </if>
+
+
+    </select>
+
 </mapper>

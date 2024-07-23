@@ -24,6 +24,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="deptId"    column="dept_id"    />
         <result property="userId"    column="user_id"    />
+
+
+        <result property="NAME"    column="params.NAME"    />
+
+        <result property="type"    column="params.type"    />
+
+        <result property="money"    column="params.money"    />
+        <result property="discount"    column="params.discount"    />
+        <result property="minimum_amount"    column="params.minimum_amount"    />
+        <result property="start_date"    column="params.start_date"    />
+        <result property="end_date"    column="params.end_date"    />
+        <result property="notes"    column="params.notes"    />
+        <result property="create_time"    column="params.create_time"    />
+
     </resultMap>
 
     <sql id="selectXdCouponsVo">
@@ -139,4 +153,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             #{id}
         </foreach>
     </delete>
+
+
+
 </mapper>

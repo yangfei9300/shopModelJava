@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdShopInfo.mapper.XdShopInfoMapper">
+    
+    <resultMap type="XdShopInfo" id="XdShopInfoResult">
+        <result property="id"    column="id"    />
+        <result property="shopName"    column="shop_name"    />
+        <result property="logo"    column="logo"    />
+        <result property="phone"    column="phone"    />
+        <result property="userName"    column="user_name"    />
+        <result property="description"    column="description"    />
+        <result property="contactEmail"    column="contact_email"    />
+        <result property="address"    column="address"    />
+        <result property="openingHours"    column="opening_hours"    />
+        <result property="status"    column="status"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectXdShopInfoVo">
+        select id, shop_name, logo, phone, user_name, description, contact_email, address, opening_hours, status, user_id, dept_id, create_time, update_time from xd_shop_info
+    </sql>
+
+    <select id="selectXdShopInfoList" parameterType="XdShopInfo" resultMap="XdShopInfoResult">
+        <include refid="selectXdShopInfoVo"/>
+        <where>  
+            <if test="shopName != null  and shopName != ''"> and shop_name like concat('%', #{shopName}, '%')</if>
+            <if test="logo != null  and logo != ''"> and logo = #{logo}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="description != null  and description != ''"> and description = #{description}</if>
+            <if test="contactEmail != null  and contactEmail != ''"> and contact_email = #{contactEmail}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="openingHours != null  and openingHours != ''"> and opening_hours = #{openingHours}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="deptId != null  and deptId != ''"> and dept_id = #{deptId}</if>
+        </where>
+    </select>
+    
+    <select id="selectXdShopInfoById" parameterType="Long" resultMap="XdShopInfoResult">
+        <include refid="selectXdShopInfoVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdShopInfo" parameterType="XdShopInfo" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_shop_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="shopName != null">shop_name,</if>
+            <if test="logo != null">logo,</if>
+            <if test="phone != null">phone,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="description != null">description,</if>
+            <if test="contactEmail != null">contact_email,</if>
+            <if test="address != null">address,</if>
+            <if test="openingHours != null">opening_hours,</if>
+            <if test="status != null">status,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="shopName != null">#{shopName},</if>
+            <if test="logo != null">#{logo},</if>
+            <if test="phone != null">#{phone},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="description != null">#{description},</if>
+            <if test="contactEmail != null">#{contactEmail},</if>
+            <if test="address != null">#{address},</if>
+            <if test="openingHours != null">#{openingHours},</if>
+            <if test="status != null">#{status},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdShopInfo" parameterType="XdShopInfo">
+        update xd_shop_info
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="shopName != null">shop_name = #{shopName},</if>
+            <if test="logo != null">logo = #{logo},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="contactEmail != null">contact_email = #{contactEmail},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="openingHours != null">opening_hours = #{openingHours},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdShopInfoById" parameterType="Long">
+        delete from xd_shop_info where id = #{id}
+    </delete>
+
+    <delete id="deleteXdShopInfoByIds" parameterType="String">
+        delete from xd_shop_info where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

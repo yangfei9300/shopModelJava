@@ -8,10 +8,14 @@ import com.ruoyi.XdCategories.domain.XdCategories;
 import com.ruoyi.XdCategories.service.IXdCategoriesService;
 import com.ruoyi.XdCoupons.domain.XdCoupons;
 import com.ruoyi.XdCoupons.service.IXdCouponsService;
+import com.ruoyi.XdCustomerService.domain.XdCustomerService;
+import com.ruoyi.XdCustomerService.service.IXdCustomerServiceService;
 import com.ruoyi.XdGoodSpecs.domain.XdGoodSpecs;
 import com.ruoyi.XdGoodSpecs.service.IXdGoodSpecsService;
 import com.ruoyi.XdProducts.domain.XdProducts;
 import com.ruoyi.XdProducts.service.IXdProductsService;
+import com.ruoyi.XdShopInfo.domain.XdShopInfo;
+import com.ruoyi.XdShopInfo.service.IXdShopInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +43,36 @@ public class shopApi {
     private IXdCartsService xdCartsService;
     @Autowired
     private IXdCouponsService xdCouponsService;
+    @Autowired
+    private IXdCustomerServiceService xdCustomerServiceService;
+    @Autowired
+    private IXdShopInfoService xdShopInfoService;
+
+    //    获取店铺详情
+    @PostMapping("/getShopInfo")
+    public Map<String,Object> getShopInfo(@RequestBody XdShopInfo xdShopInfo){
+        Map<String,Object> map=new HashMap<String, Object>();
+        List<XdShopInfo> xdShopInfos=   xdShopInfoService.selectXdShopInfoList(xdShopInfo);
+        if(xdShopInfos.size()>0){
+            map.put("code",200);
+            map.put("msg","操作成功");
+            map.put("data",xdShopInfos.get(0));
+        }else{
+            map.put("code",201);
+            map.put("msg","无此店铺");
+        }
+        return  map;
+    }
+//    获取客服列表
+    @PostMapping("/getKefuList")
+    public Map<String,Object> getKefuList(@RequestBody XdCustomerService xdCustomerService){
+        Map<String,Object> map=new HashMap<String, Object>();
+        List<XdCustomerService> xdCustomerServices=   xdCustomerServiceService.selectXdCustomerServiceList(xdCustomerService);
+            map.put("code",200);
+            map.put("msg","操作成功");
+            map.put("data",xdCustomerServices);
+        return  map;
+    }
 
     //   获取商品分类
     @PostMapping("/getGoodTypes")
@@ -121,6 +155,18 @@ public class shopApi {
         map.put("msg", "操作成功");
         map.put("code", 200);
         map.put("data", xdCouponsList);
+        return map;
+    }
+
+//    获取推荐的商品列表
+    @PostMapping("/getRecommendList")
+    public Map<String, Object> getRecommendList(@RequestBody XdProducts xdProducts) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        xdProducts.setIsRecommend("1");
+        List<XdProducts> xdProductsList= xdProductsService.selectXdProductsList(xdProducts);
+        map.put("msg", "操作成功");
+        map.put("code", 200);
+        map.put("data", xdProductsList);
         return map;
     }
 

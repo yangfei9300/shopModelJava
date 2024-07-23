@@ -10,7 +10,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name"    column="name"    />
         <result property="phone"    column="phone"    />
         <result property="address"    column="address"    />
-
         <result property="province"    column="province"    />
         <result property="city"    column="city"    />
         <result property="area"    column="area"    />
@@ -20,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="deptId"    column="dept_id"    />
         <result property="userId"    column="user_id"    />
+        <result property="uId"    column="u_id"    />
     </resultMap>
 
     <sql id="selectXdAddressVo">
@@ -39,6 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="notes != null  and notes != ''"> and notes like concat('%', #{notes}, '%')</if>
             <if test="deptId != null "> and dept_id = #{deptId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="uId != null "> and u_id = #{uId}</if>
             <if test="1==1 ">and 1=1</if>
         </where>
         ${params.dataScope}

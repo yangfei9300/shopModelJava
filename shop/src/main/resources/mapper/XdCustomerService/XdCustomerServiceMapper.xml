@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdCustomerService.mapper.XdCustomerServiceMapper">
+    
+    <resultMap type="XdCustomerService" id="XdCustomerServiceResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="email"    column="email"    />
+        <result property="phone"    column="phone"    />
+        <result property="avatarUrl"    column="avatar_url"    />
+        <result property="department"    column="department"    />
+        <result property="status"    column="status"    />
+        <result property="lastLoginTime"    column="last_login_time"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updatedTime"    column="updated_time"    />
+    </resultMap>
+
+    <sql id="selectXdCustomerServiceVo">
+        select id, name, email, phone, avatar_url, department, status, last_login_time, user_id, dept_id, created_time, updated_time from xd_customer_service
+    </sql>
+
+    <select id="selectXdCustomerServiceList" parameterType="XdCustomerService" resultMap="XdCustomerServiceResult">
+        <include refid="selectXdCustomerServiceVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
+            <if test="avatarUrl != null  and avatarUrl != ''"> and avatar_url = #{avatarUrl}</if>
+            <if test="department != null  and department != ''"> and department = #{department}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="lastLoginTime != null "> and last_login_time = #{lastLoginTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectXdCustomerServiceById" parameterType="Long" resultMap="XdCustomerServiceResult">
+        <include refid="selectXdCustomerServiceVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdCustomerService" parameterType="XdCustomerService" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_customer_service
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">name,</if>
+            <if test="email != null">email,</if>
+            <if test="phone != null and phone != ''">phone,</if>
+            <if test="avatarUrl != null">avatar_url,</if>
+            <if test="department != null">department,</if>
+            <if test="status != null and status != ''">status,</if>
+            <if test="lastLoginTime != null">last_login_time,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updatedTime != null">updated_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null and name != ''">#{name},</if>
+            <if test="email != null">#{email},</if>
+            <if test="phone != null and phone != ''">#{phone},</if>
+            <if test="avatarUrl != null">#{avatarUrl},</if>
+            <if test="department != null">#{department},</if>
+            <if test="status != null and status != ''">#{status},</if>
+            <if test="lastLoginTime != null">#{lastLoginTime},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdCustomerService" parameterType="XdCustomerService">
+        update xd_customer_service
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null and name != ''">name = #{name},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="phone != null and phone != ''">phone = #{phone},</if>
+            <if test="avatarUrl != null">avatar_url = #{avatarUrl},</if>
+            <if test="department != null">department = #{department},</if>
+            <if test="status != null and status != ''">status = #{status},</if>
+            <if test="lastLoginTime != null">last_login_time = #{lastLoginTime},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdCustomerServiceById" parameterType="Long">
+        delete from xd_customer_service where id = #{id}
+    </delete>
+
+    <delete id="deleteXdCustomerServiceByIds" parameterType="String">
+        delete from xd_customer_service where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

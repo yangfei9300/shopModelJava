@@ -1,5 +1,6 @@
 package com.ruoyi.XdOrders.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -204,6 +205,7 @@ public class XdOrdersController extends BaseController
             return map;
         }
         xdOrders.setStatus(3L);
+        xdOrders.setSendTime(new Date());
         int count=xdOrdersService.updateXdOrders(xdOrders);
         return toAjax(count);
     }

@@ -24,7 +24,9 @@ public class XdOrders extends BaseEntity {
      * ID
      */
     private Long id;
-
+    /** 上级用户ID */
+    @Excel(name = "上级用户ID")
+    private Long superiorId;
     /**
      * 用户ID
      */
@@ -226,6 +228,15 @@ public class XdOrders extends BaseEntity {
 
     public void setSendTime(Date sendTime) {
         this.sendTime = sendTime;
+    }
+
+    {
+        this.superiorId = superiorId;
+    }
+
+    public Long getSuperiorId()
+    {
+        return superiorId;
     }
 
     public Date getSendTime() {

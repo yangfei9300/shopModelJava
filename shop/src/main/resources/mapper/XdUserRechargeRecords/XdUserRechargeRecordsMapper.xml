@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdUserRechargeRecords.mapper.XdUserRechargeRecordsMapper">
+    
+    <resultMap type="XdUserRechargeRecords" id="XdUserRechargeRecordsResult">
+        <result property="id"    column="id"    />
+        <result property="uId"    column="u_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="rechargeAmount"    column="recharge_amount"    />
+        <result property="paymentMethod"    column="payment_method"    />
+        <result property="paymentStatus"    column="payment_status"    />
+        <result property="transactionId"    column="transaction_id"    />
+        <result property="rechargeTime"    column="recharge_time"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectXdUserRechargeRecordsVo">
+        select id, u_id, user_id, dept_id, recharge_amount, payment_method, payment_status, transaction_id, recharge_time, created_time, update_time from xd_user_recharge_records
+    </sql>
+
+    <select id="selectXdUserRechargeRecordsList" parameterType="XdUserRechargeRecords" resultMap="XdUserRechargeRecordsResult">
+        <include refid="selectXdUserRechargeRecordsVo"/>
+        <where>  
+            <if test="uId != null "> and u_id = #{uId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="rechargeAmount != null "> and recharge_amount = #{rechargeAmount}</if>
+            <if test="paymentMethod != null  and paymentMethod != ''"> and payment_method = #{paymentMethod}</if>
+            <if test="paymentStatus != null  and paymentStatus != ''"> and payment_status = #{paymentStatus}</if>
+            <if test="transactionId != null  and transactionId != ''"> and transaction_id = #{transactionId}</if>
+            <if test="rechargeTime != null "> and recharge_time = #{rechargeTime}</if>
+            <if test="createdTime != null "> and created_time = #{createdTime}</if>
+        </where>
+        order by created_time desc
+    </select>
+    
+    <select id="selectXdUserRechargeRecordsById" parameterType="Long" resultMap="XdUserRechargeRecordsResult">
+        <include refid="selectXdUserRechargeRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdUserRechargeRecords" parameterType="XdUserRechargeRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_user_recharge_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uId != null">u_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="rechargeAmount != null">recharge_amount,</if>
+            <if test="paymentMethod != null and paymentMethod != ''">payment_method,</if>
+            <if test="paymentStatus != null and paymentStatus != ''">payment_status,</if>
+            <if test="transactionId != null">transaction_id,</if>
+            <if test="rechargeTime != null">recharge_time,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uId != null">#{uId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="rechargeAmount != null">#{rechargeAmount},</if>
+            <if test="paymentMethod != null and paymentMethod != ''">#{paymentMethod},</if>
+            <if test="paymentStatus != null and paymentStatus != ''">#{paymentStatus},</if>
+            <if test="transactionId != null">#{transactionId},</if>
+            <if test="rechargeTime != null">#{rechargeTime},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdUserRechargeRecords" parameterType="XdUserRechargeRecords">
+        update xd_user_recharge_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="uId != null">u_id = #{uId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="rechargeAmount != null">recharge_amount = #{rechargeAmount},</if>
+            <if test="paymentMethod != null and paymentMethod != ''">payment_method = #{paymentMethod},</if>
+            <if test="paymentStatus != null and paymentStatus != ''">payment_status = #{paymentStatus},</if>
+            <if test="transactionId != null">transaction_id = #{transactionId},</if>
+            <if test="rechargeTime != null">recharge_time = #{rechargeTime},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdUserRechargeRecordsById" parameterType="Long">
+        delete from xd_user_recharge_records where id = #{id}
+    </delete>
+
+    <delete id="deleteXdUserRechargeRecordsByIds" parameterType="String">
+        delete from xd_user_recharge_records where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

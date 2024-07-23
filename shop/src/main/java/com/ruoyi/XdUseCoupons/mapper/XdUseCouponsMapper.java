@@ -26,6 +26,7 @@ public interface XdUseCouponsMapper
      * @return 优惠券领取使用记录集合
      */
     public List<XdUseCoupons> selectXdUseCouponsList(XdUseCoupons xdUseCoupons);
+    public List<XdUseCoupons> getCouponByUid(XdUseCoupons xdUseCoupons);
 
     /**
      * 新增优惠券领取使用记录

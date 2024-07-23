@@ -27,6 +27,10 @@ public interface XdCouponsMapper
      */
     public List<XdCoupons> selectXdCouponsList(XdCoupons xdCoupons);
 
+
+
+
+
     /**
      * 新增优惠券
      * 

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdOrderRefunds.mapper.XdOrderRefundsMapper">
+    
+    <resultMap type="XdOrderRefunds" id="XdOrderRefundsResult">
+        <result property="id"    column="id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="refundAmount"    column="refund_amount"    />
+        <result property="refundStatus"    column="refund_status"    />
+        <result property="refundReason"    column="refund_reason"    />
+        <result property="refundMethod"    column="refund_method"    />
+        <result property="returnResult"    column="return_result"    />
+        <result property="refundAccount"    column="refund_account"    />
+        <result property="uId"    column="u_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="refundDate"    column="refund_date"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updatedTime"    column="updated_time"    />
+    </resultMap>
+
+    <sql id="selectXdOrderRefundsVo">
+        select id, order_id, user_id, refund_amount, refund_status, refund_reason,return_result, refund_method, refund_account, u_id, dept_id, refund_date, created_time, updated_time from xd_order_refunds
+    </sql>
+
+    <select id="selectXdOrderRefundsList" parameterType="XdOrderRefunds" resultMap="XdOrderRefundsResult">
+        <include refid="selectXdOrderRefundsVo"/>
+        <where>  
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="returnResult != null  and returnResult != ''"> and return_result = #{returnResult}</if>
+            <if test="refundStatus != null  and refundStatus != ''"> and refund_status = #{refundStatus}</if>
+            <if test="refundReason != null  and refundReason != ''"> and refund_reason like concat('%', #{refundReason}, '%')</if>
+            <if test="refundMethod != null  and refundMethod != ''"> and refund_method = #{refundMethod}</if>
+        </where>
+    </select>
+    
+    <select id="selectXdOrderRefundsById" parameterType="Long" resultMap="XdOrderRefundsResult">
+        <include refid="selectXdOrderRefundsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdOrderRefunds" parameterType="XdOrderRefunds" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_order_refunds
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">order_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="refundAmount != null">refund_amount,</if>
+            <if test="refundStatus != null">refund_status,</if>
+            <if test="refundReason != null">refund_reason,</if>
+            <if test="refundMethod != null">refund_method,</if>
+            <if test="refundAccount != null">refund_account,</if>
+            <if test="uId != null">u_id,</if>
+            <if test="returnResult != null">return_result,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="refundDate != null">refund_date,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updatedTime != null">updated_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="orderId != null">#{orderId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="refundAmount != null">#{refundAmount},</if>
+            <if test="refundStatus != null">#{refundStatus},</if>
+            <if test="refundReason != null">#{refundReason},</if>
+            <if test="refundMethod != null">#{refundMethod},</if>
+            <if test="refundAccount != null">#{refundAccount},</if>
+            <if test="uId != null">#{uId},</if>
+
+            <if test="returnResult != null">#{returnResult},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="refundDate != null">#{refundDate},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdOrderRefunds" parameterType="XdOrderRefunds">
+        update xd_order_refunds
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="refundAmount != null">refund_amount = #{refundAmount},</if>
+            <if test="refundStatus != null">refund_status = #{refundStatus},</if>
+            <if test="refundReason != null">refund_reason = #{refundReason},</if>
+            <if test="refundMethod != null">refund_method = #{refundMethod},</if>
+            <if test="refundAccount != null">refund_account = #{refundAccount},</if>
+            <if test="uId != null">u_id = #{uId},</if>
+            <if test="returnResult != null">return_result = #{returnResult},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="refundDate != null">refund_date = #{refundDate},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdOrderRefundsById" parameterType="Long">
+        delete from xd_order_refunds where id = #{id}
+    </delete>
+
+    <delete id="deleteXdOrderRefundsByIds" parameterType="String">
+        delete from xd_order_refunds where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

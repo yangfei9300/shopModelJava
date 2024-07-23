@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.XdUserConsumptionRecords.mapper.XdUserConsumptionRecordsMapper">
+    
+    <resultMap type="XdUserConsumptionRecords" id="XdUserConsumptionRecordsResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="uId"    column="u_id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="productName"    column="product_name"    />
+        <result property="quantity"    column="quantity"    />
+        <result property="unitPrice"    column="unit_price"    />
+        <result property="totalPrice"    column="total_price"    />
+        <result property="consumptionTime"    column="consumption_time"    />
+        <result property="paymentStatus"    column="payment_status"    />
+        <result property="createdAt"    column="created_at"    />
+        <result property="updatedAt"    column="updated_at"    />
+    </resultMap>
+
+    <sql id="selectXdUserConsumptionRecordsVo">
+        select id, user_id, u_id, dept_id, order_id, product_name, quantity, unit_price, total_price, consumption_time, payment_status, created_at, updated_at from xd_user_consumption_records
+    </sql>
+
+    <select id="selectXdUserConsumptionRecordsList" parameterType="XdUserConsumptionRecords" resultMap="XdUserConsumptionRecordsResult">
+        <include refid="selectXdUserConsumptionRecordsVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="uId != null "> and u_id = #{uId}</if>
+            <if test="deptId != null "> and dept_id = #{deptId}</if>
+            <if test="orderId != null "> and order_id = #{orderId}</if>
+            <if test="productName != null  and productName != ''"> and product_name like concat('%', #{productName}, '%')</if>
+            <if test="quantity != null "> and quantity = #{quantity}</if>
+            <if test="unitPrice != null "> and unit_price = #{unitPrice}</if>
+            <if test="totalPrice != null "> and total_price = #{totalPrice}</if>
+            <if test="consumptionTime != null "> and consumption_time = #{consumptionTime}</if>
+            <if test="paymentStatus != null  and paymentStatus != ''"> and payment_status = #{paymentStatus}</if>
+            <if test="createdAt != null "> and created_at = #{createdAt}</if>
+            <if test="updatedAt != null "> and updated_at = #{updatedAt}</if>
+        </where>
+        order by created_at desc
+    </select>
+    
+    <select id="selectXdUserConsumptionRecordsById" parameterType="Long" resultMap="XdUserConsumptionRecordsResult">
+        <include refid="selectXdUserConsumptionRecordsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertXdUserConsumptionRecords" parameterType="XdUserConsumptionRecords" useGeneratedKeys="true" keyProperty="id">
+        insert into xd_user_consumption_records
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="uId != null">u_id,</if>
+            <if test="deptId != null">dept_id,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="productName != null">product_name,</if>
+            <if test="quantity != null">quantity,</if>
+            <if test="unitPrice != null">unit_price,</if>
+            <if test="totalPrice != null">total_price,</if>
+            <if test="consumptionTime != null">consumption_time,</if>
+            <if test="paymentStatus != null">payment_status,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="uId != null">#{uId},</if>
+            <if test="deptId != null">#{deptId},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="productName != null">#{productName},</if>
+            <if test="quantity != null">#{quantity},</if>
+            <if test="unitPrice != null">#{unitPrice},</if>
+            <if test="totalPrice != null">#{totalPrice},</if>
+            <if test="consumptionTime != null">#{consumptionTime},</if>
+            <if test="paymentStatus != null">#{paymentStatus},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+         </trim>
+    </insert>
+
+    <update id="updateXdUserConsumptionRecords" parameterType="XdUserConsumptionRecords">
+        update xd_user_consumption_records
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="uId != null">u_id = #{uId},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="productName != null">product_name = #{productName},</if>
+            <if test="quantity != null">quantity = #{quantity},</if>
+            <if test="unitPrice != null">unit_price = #{unitPrice},</if>
+            <if test="totalPrice != null">total_price = #{totalPrice},</if>
+            <if test="consumptionTime != null">consumption_time = #{consumptionTime},</if>
+            <if test="paymentStatus != null">payment_status = #{paymentStatus},</if>
+            <if test="createdAt != null">created_at = #{createdAt},</if>
+            <if test="updatedAt != null">updated_at = #{updatedAt},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteXdUserConsumptionRecordsById" parameterType="Long">
+        delete from xd_user_consumption_records where id = #{id}
+    </delete>
+
+    <delete id="deleteXdUserConsumptionRecordsByIds" parameterType="String">
+        delete from xd_user_consumption_records where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

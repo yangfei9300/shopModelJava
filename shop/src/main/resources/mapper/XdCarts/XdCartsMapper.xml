@@ -15,6 +15,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateTime"    column="update_time"    />
         <result property="deptId"    column="dept_id"    />
         <result property="userId"    column="user_id"    />
+
+        <result property="params.space_price"    column="space_price"    />
+        <result property="params.space_original_price"    column="space_original_price"    />
+        <result property="params.spaceid"    column="spaceid"    />
+        <result property="params.spacename"    column="spacename"    />
+        <result property="params.xpname"    column="xpname"    />
+        <result property="params.xpimg"    column="xpimg"    />
+        <result property="params.preferentialPrice"    column="preferentialPrice"    />
+
         <result property="params.spaceImg"    column="space_img"    />
     </resultMap>
 
@@ -41,9 +50,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getUserCarts" parameterType="XdCarts" resultMap="XdCartsResult">
         SELECT
-            xc.id,xc.product_id,xc.specs_id,xc.quantity,xgs.space_price as price,xgs.space_img,xgs.space_img,xgs.status
-        FROM xd_carts xc
-                 JOIN xd_good_specs xgs ON xgs.id = xc.specs_id
+            xc.id,
+            xc.product_id,
+            xc.specs_id,
+            xc.quantity,
+            xgs.space_price AS price,
+            xgs.space_original_price AS space_original_price,
+            xgs.space_img,
+            xgs.id spaceid,
+            xgs.specs_name spacename,
+            xgs.STATUS ,
+            xp.`name` xpname,
+            xp.img xpimg,
+            xp.preferential_price preferentialPrice
+        FROM
+            xd_carts xc
+                LEFT JOIN	 xd_good_specs xgs ON xgs.id = xc.specs_id
+                LEFT JOIN xd_products xp ON xp.id=xc.product_id
         where xc.dept_id=#{deptId} AND xc.u_id=#{uId}
     </select>
 

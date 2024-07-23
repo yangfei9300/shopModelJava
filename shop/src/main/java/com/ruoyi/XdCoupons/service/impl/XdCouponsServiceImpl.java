@@ -47,6 +47,8 @@ public class XdCouponsServiceImpl implements IXdCouponsService
         return xdCouponsMapper.selectXdCouponsList(xdCoupons);
     }
 
+
+
     /**
      * 新增优惠券
      * 
